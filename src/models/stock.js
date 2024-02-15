@@ -1,18 +1,23 @@
-import db from './database.js'
+import { inicializeDb, db,  } from './dbConfig.js'
 
-// Create item
-const create = function(nombre, codigo, impuesto, precio, cantidad, callback){
-    const query = 'INSERT INTO almacen (nombre, codigo, impuesto, precio, cantidad) VALUES (?,?,?,?,?)';
-    const values = [nombre, codigo, impuesto, precio, cantidad];
+
+// CREATE ITEM
+const create = function(nombre, codigo, impuesto, precio, cantidad, categoria, callback){
+    // const bd = createAlmacenTable();
+    const query = 'INSERT INTO almacen (nombre, codigo, impuesto, precio, cantidad, categoria_id) VALUES (?,?,?,?,?,?)';
+    const values = [nombre, codigo, impuesto, precio, cantidad, categoria];
 
     db.run(query, values, function(err){
         callback(err, {id: this.lastID})
     });
-};
+}
+// READ ITEM
+const readAll = (callback)=>{
+    const query = 'SELECT almacen.nombre, almacen.codigo, almacen.impuesto,almacen.precio ,almacen.cantidad,categoria.nombre FROM almacen JOIN categoria ON almacen.categoria_id = categoria.id';
+    db.all(query, [], callback);
+}
 
-const read = (callback)=>{
-    const query = 'SELECT * FROM almacen';
-    db.all(query, [], callback)
-};
 
-export default {read, create};
+inicializeDb();
+
+export default {readAll, create};
