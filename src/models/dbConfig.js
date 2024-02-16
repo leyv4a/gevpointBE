@@ -13,7 +13,7 @@ const createAlmacenTable = () => {
        ?
        console.log(err.message)
        :
-       console.log("Table 'almacen' created successfully")
+       console.log("Table 'almacen' created or existed successfully")
     });
 }
 
@@ -23,7 +23,7 @@ const createCategoriaTable = () => {
      ?
        console.log(err.message)
        :
-       console.log("Table 'categoria' created successfully")
+       console.log("Table 'categoria' created or existed successfully")
     });
 }
 
