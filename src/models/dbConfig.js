@@ -8,7 +8,7 @@ const inicializeDb = ()=>{
 };
 
 const createAlmacenTable = () => {
-    db.run('CREATE TABLE IF NOT EXISTS almacen (id INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT, codigo TEXT, impuesto REAL, precio REAL, cantidad REAL, categoria_id INTEGER, FOREIGN KEY(categoria_id) REFERENCES categoria(id))', (err) =>{
+    db.run('CREATE TABLE IF NOT EXISTS almacen (id INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT UNIQUE, codigo TEXT UNIQUE, impuesto REAL, precio REAL, cantidad REAL, categoria_id INTEGER, FOREIGN KEY(categoria_id) REFERENCES categoria(id))', (err) =>{
       err
        ?
        console.log(err.message)
@@ -18,7 +18,7 @@ const createAlmacenTable = () => {
 }
 
 const createCategoriaTable = () => {
-    db.run('CREATE TABLE IF NOT EXISTS categoria (id INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT)', (err) =>{
+    db.run('CREATE TABLE IF NOT EXISTS categoria (id INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT UNIQUE)', (err) =>{
       err
      ?
        console.log(err.message)

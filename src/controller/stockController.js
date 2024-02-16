@@ -16,7 +16,7 @@ const createItem = (req, res) => {
         const { nombre, codigo, impuesto, precio, cantidad, categoria } = req.body;
 
         stock.create(nombre, codigo, impuesto, precio, cantidad, categoria, (err, item) => {
-        res.status(200).send(`Item added successfully, id: ${item.id}`)
+        res.status(200).send(`Item added successfully. Id: ${item.id}`)
     });
     } catch (error) {
         res.status(500).send(error.message || 'Error creating item...')
