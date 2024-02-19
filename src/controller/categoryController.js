@@ -1,8 +1,10 @@
 import category from '../models/category.js';
+import { formatText } from '../utils/format.js';
 
 const createCategory = (req, res) => {
     try {
-        const {nombre} = req.body;
+        var {nombre} = req.body;
+        nombre = formatText(nombre);
         category.createCategory(nombre, (err, item) => {
             res.status(200).send(`Category added successfully. Id: ${item.id}`);
         });

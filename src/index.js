@@ -1,5 +1,4 @@
 import express from "express";
-import stock from "./models/stock.js";
 import routes from './routes/index.js';
 
 
