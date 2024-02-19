@@ -19,7 +19,7 @@ const create = function(nombre, codigo, impuesto, precio, cantidad, categoria, c
 
 // READ ITEM
 const readAll = (callback)=>{
-    const query = 'SELECT almacen.nombre, almacen.codigo, almacen.impuesto,almacen.precio ,almacen.cantidad, categoria.nombre AS Categoria FROM almacen JOIN categoria ON almacen.categoria_id = categoria.id';
+    const query = 'SELECT almacen.id, almacen.nombre, almacen.codigo, almacen.impuesto,almacen.precio ,almacen.cantidad, categoria.nombre AS Categoria FROM almacen JOIN categoria ON almacen.categoria_id = categoria.id';
     db.all(query, [], callback);
 }
 
