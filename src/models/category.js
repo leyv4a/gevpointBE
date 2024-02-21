@@ -1,4 +1,4 @@
-import { inicializeDb, db } from "./dbConfig.js";
+import { db } from "./dbConfig.js";
 
 //CRETE CATEGORY
 const createCategory = function (nombre ,callback) {
@@ -25,7 +25,6 @@ const readAllCategories = function (callback) {
     }
    }
 
-   inicializeDb();
 
    export default { readAllCategories, createCategory}
     

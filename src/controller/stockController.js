@@ -14,17 +14,19 @@ const readAllItems = (req, res) => {
 
 const createItem = (req, res) => {
     try {
-        var { nombre, codigo, impuesto, precio, cantidad, categoria } = req.body;
+        var { nombre, codigo, impuesto, precio, cantidadActual, cantidadMinima, categoria } = req.body;
         nombre = formatText(nombre);
         codigo = formatCode(codigo);
-        cantidad = formatQuantity(cantidad);
+        cantidadActual = formatQuantity(cantidadActual);
+        cantidadMinima = formatQuantity(cantidadMinima); //
+
         precio = formatPrice(precio);
     
        if (!codeLenght(codigo)) {
         res.status(500).send("Code length must be 4 digits");
        }else{
         
-        stock.create(nombre, codigo, impuesto, precio, cantidad, categoria, (err, item) => {
+        stock.create(nombre, codigo, impuesto, precio, cantidadActual, cantidadMinima, categoria, (err, item) => {
         res.status(200).send(`Item added successfully. Id: ${item.id}`)
  
     });
