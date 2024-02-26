@@ -25,7 +25,23 @@ const readAllCategories = function (callback) {
     }
    }
 
+   //READ BY NAME CATEGORIES
+const readByName = function (nombre, callback) {
+    try {
+        const query = 'SELECT id, nombre FROM categoria WHERE nombre = ?';
+        db.all(query, [nombre], (err, rows) => {
+            if (err) {
+                callback(err, null);
+                return;
+            }
+            callback(null, rows);
+        });
+    } catch (error) {
+        callback(error.message, null);
+    }
+   }
 
-   export default { readAllCategories, createCategory}
+
+   export default { readAllCategories, createCategory, readByName}
     
   

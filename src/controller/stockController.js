@@ -14,7 +14,7 @@ const readAllItems = (req, res) => {
 
 const createItem = (req, res) => {
     try {
-        var { nombre, codigo, impuesto, precio, cantidadActual, cantidadMinima, categoria } = req.body;
+        var { nombre, codigo,unidad , impuesto, precio, cantidadActual, cantidadMinima, categoria } = req.body;
         nombre = formatText(nombre);
         codigo = formatCode(codigo);
         cantidadActual = formatQuantity(cantidadActual);
@@ -26,7 +26,7 @@ const createItem = (req, res) => {
         res.status(500).send("Code length must be 4 digits");
        }else{
         
-        stock.create(nombre, codigo, impuesto, precio, cantidadActual, cantidadMinima, categoria, (err, item) => {
+        stock.create(nombre, codigo,unidad, impuesto, precio, cantidadActual, cantidadMinima, categoria, (err, item) => {
         res.status(200).send(`Item added successfully. Id: ${item.id}`)
  
     });
@@ -35,5 +35,21 @@ const createItem = (req, res) => {
         res.status(500).send(error.message || 'Error creating item...')
     }
 }
+const readByCode = (req, res) => {
+    try {
+        var codigo= req.params.codigo;
+        stock.readByCode(codigo, (err, items)=>{
+            if (err) {
+                res.status(500).send(err.message || 'Error reading item');
+                return;
+            }
+            res.status(200).json(items);
+        });
+    } catch (error) {
+        res.status(500).send( error.message ||'Error reading item');
+    }
+}
 
-export {readAllItems, createItem};
+
+
+export {readAllItems, createItem, readByCode};

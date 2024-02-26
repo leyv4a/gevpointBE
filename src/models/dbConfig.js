@@ -11,7 +11,7 @@ const inicializeDb = ()=>{
 };
 
 const createProductosTable = () => {
-    db.run('CREATE TABLE IF NOT EXISTS productos (id INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT UNIQUE NOT NULL, codigo TEXT UNIQUE NOT NULL, impuesto REAL DEFAULT 0.0 , precio REAL, cantidadActual REAL,  cantidadMinima REAL,  categoria_id INTEGER, FOREIGN KEY(categoria_id) REFERENCES categoria(id))', (err) =>{
+    db.run('CREATE TABLE IF NOT EXISTS productos (id INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT UNIQUE NOT NULL, codigo TEXT UNIQUE NOT NULL,unidad TEXT NOT NULL, impuesto REAL DEFAULT 0.0 , precio REAL, cantidadActual REAL DEFAULT 0,  cantidadMinima REAL, categoria_id INTEGER, FOREIGN KEY(categoria_id) REFERENCES categoria(id))', (err) =>{
       err
        ?
        console.log(err.message)

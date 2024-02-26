@@ -18,7 +18,7 @@ const createTransaction = function (producto_id, tipo,cantidad, fecha ,callback)
 //READ ALL TRANSACTIONS
 const readAllTransactions =  (callback) => {
     try {
-        const query = "SELECT t.id, p.nombre, t.tipo, t.cantidad, t.fecha FROM transacciones t JOIN productos p ON p.id = t.producto_id";
+        const query = "SELECT t.id, p.nombre as nombre, t.tipo, t.cantidad, t.fecha FROM transacciones t JOIN productos p ON p.id = t.producto_id";
         db.all(query, [], callback);
     } catch (error) {
         callback(error.message, null);
