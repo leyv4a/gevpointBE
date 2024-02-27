@@ -19,7 +19,7 @@ const create = function(nombre, codigo, unidad ,impuesto, precio, cantidadMinima
 
 // READ ITEM
 const readAll = (callback)=>{
-    const query = 'SELECT p.id, p.nombre, p.codigo ,p.impuesto,p.precio ,p.cantidadActual, p.cantidadMinima, c.nombre AS Categoria FROM productos p JOIN categoria c ON p.categoria_id = c.id';
+    const query = 'SELECT p.id, p.nombre, p.codigo, p.unidad ,p.impuesto,p.precio ,p.cantidadActual, p.cantidadMinima, c.nombre AS Categoria FROM productos p JOIN categoria c ON p.categoria_id = c.id';
     db.all(query, [], callback);
 }
 
@@ -39,6 +39,18 @@ const readByCode = function (codigo, callback) {
     }
    }
 
+   const update = (nombre, codigo, unidad ,impuesto, precio, cantidadMinima, categoria, id,callback) => {
+        try {
+            const query = 'UPDATE productos SET nombre = ?, codigo=?, unidad=?, impuesto=? ,precio = ?, cantidadMinima = ?, categoria_id = ? WHERE id = ?';
+            const values = [nombre, codigo,unidad, impuesto, precio, cantidadMinima, categoria,id];
+            db.run(query,values, function(err){
+                if (err) throw err;
+                callback(null, {id: this.lastID})
+            });
+        } catch (error) {
+                callback(error.message, null);
+        }
+   }
 
 
-export default {readAll, create, readByCode};
+export default {readAll, create, readByCode, update};

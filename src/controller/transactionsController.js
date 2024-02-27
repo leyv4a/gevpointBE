@@ -1,9 +1,10 @@
 import transactions from "../models/transactions.js";
+import { formatPrice } from '../utils/format.js';
 
 const createTransaction = (req, res) => {
     try {
         var {producto_id, tipo, cantidad, fecha} = req.body
-
+        cantidad = formatPrice(cantidad)
         transactions.createTransaction(producto_id, tipo, cantidad, fecha, (err, item)=>{
             res.status(200).send(`Transaction added successfully. Id: ${item.id}`)
         })

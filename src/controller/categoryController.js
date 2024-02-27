@@ -22,10 +22,10 @@ const readAllCategories = (req, res) => {
         res.status(500).send( error.message ||'Error reading categories');
     }
 }
-const readByName = (req, res) => {
+const readById = (req, res) => {
     try {
-        var nombre = req.params.nombre;
-        category.readByName(nombre, (err, items)=>{
+        var id = req.params.id;
+        category.readById(id, (err, items)=>{
             if (err) {
                 res.status(500).send(err.message || 'Error reading categories');
                 return;
@@ -37,4 +37,4 @@ const readByName = (req, res) => {
     }
 }
 
-export {createCategory, readAllCategories, readByName};
+export {createCategory, readAllCategories, readById};

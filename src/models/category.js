@@ -25,11 +25,11 @@ const readAllCategories = function (callback) {
     }
    }
 
-   //READ BY NAME CATEGORIES
-const readByName = function (nombre, callback) {
+   //READ BY ID CATEGORIES
+const readById = function (id, callback) {
     try {
-        const query = 'SELECT id, nombre FROM categoria WHERE nombre = ?';
-        db.all(query, [nombre], (err, rows) => {
+        const query = 'SELECT id, nombre FROM categoria WHERE id = ?';
+        db.all(query, [id], (err, rows) => {
             if (err) {
                 callback(err, null);
                 return;
@@ -42,6 +42,6 @@ const readByName = function (nombre, callback) {
    }
 
 
-   export default { readAllCategories, createCategory, readByName}
+   export default { readAllCategories, createCategory, readById}
     
   

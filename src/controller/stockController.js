@@ -14,19 +14,17 @@ const readAllItems = (req, res) => {
 
 const createItem = (req, res) => {
     try {
-        var { nombre, codigo,unidad , impuesto, precio, cantidadActual, cantidadMinima, categoria } = req.body;
+        var { nombre, codigo,unidad , impuesto, precio, cantidadMinima, categoria } = req.body;
         nombre = formatText(nombre);
         codigo = formatCode(codigo);
-        cantidadActual = formatQuantity(cantidadActual);
         cantidadMinima = formatQuantity(cantidadMinima); //
-
         precio = formatPrice(precio);
     
        if (!codeLenght(codigo)) {
         res.status(500).send("Code length must be 4 digits");
        }else{
         
-        stock.create(nombre, codigo,unidad, impuesto, precio, cantidadActual, cantidadMinima, categoria, (err, item) => {
+        stock.create(nombre, codigo,unidad, impuesto, precio, cantidadMinima, categoria, (err, item) => {
         res.status(200).send(`Item added successfully. Id: ${item.id}`)
  
     });
@@ -35,6 +33,34 @@ const createItem = (req, res) => {
         res.status(500).send(error.message || 'Error creating item...')
     }
 }
+
+const updateItem = (req, res) => {
+    try {
+        var { nombre, codigo,unidad , impuesto, precio, cantidadMinima, categoria, id } = req.body;
+        nombre = formatText(nombre);
+        codigo = formatCode(codigo);
+        cantidadMinima = formatQuantity(cantidadMinima); //
+        precio = formatPrice(precio);
+        
+       if (categoria === 0) {
+        res.status(400).send("Select a category");
+        return
+       }else if (!codeLenght(codigo)) {
+        res.status(400).send("Code length must be 4 digits");
+       }else{
+        stock.update(nombre, codigo, unidad, impuesto, precio, cantidadMinima, categoria, id, (err, item) => {
+            if (err) {
+                res.status(500).send(err); // Si hay un error, envía el mensaje de error al cliente
+            } else {
+                res.status(200).send(`Item updated successfully. Id: ${id}`);
+            }
+        });
+    }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
 const readByCode = (req, res) => {
     try {
         var codigo= req.params.codigo;
@@ -52,4 +78,4 @@ const readByCode = (req, res) => {
 
 
 
-export {readAllItems, createItem, readByCode};
+export {readAllItems, createItem, readByCode, updateItem};
