@@ -19,9 +19,8 @@ const createItem = (req, res) => {
         codigo = formatCode(codigo);
         cantidadMinima = formatQuantity(cantidadMinima); //
         precio = formatPrice(precio);
-    
        if (!codeLenght(codigo)) {
-        res.status(500).send("Code length must be 4 digits");
+        res.status(400).send("Code length must be 4 digits");
        }else{
         
         stock.create(nombre, codigo,unidad, impuesto, precio, cantidadMinima, categoria, (err, item) => {
@@ -76,6 +75,22 @@ const readByCode = (req, res) => {
     }
 }
 
+const deleteItem = (req, res) => {
+    try {
+        var id = req.params.id;
+        id == 0 ?
+        res.status(400).send("Select an item") :
+        stock.deleteItem(id, (err, deletedItem) => {
+            if (err) {
+                res.status(500).send(err); // Si hay un error, envía el mensaje de error al cliente
+            } else {
+                res.status(200).send(`Item deleted successfully. Id: ${id}`);
+            }
+        });
+    } catch (error) {
+        
+    }
+}
 
 
-export {readAllItems, createItem, readByCode, updateItem};
+export {readAllItems, createItem, readByCode, updateItem, deleteItem};

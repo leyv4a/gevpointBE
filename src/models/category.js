@@ -41,7 +41,38 @@ const readById = function (id, callback) {
     }
    }
 
+   const update = function (nombre, id, callback){
+    try {
+        const query = 'UPDATE categoria SET nombre =? WHERE id =?';
+        const values = [nombre, id];
+        db.run(query, values, function(err){
+            if (err) {
+            callback(err.message, null);
+            }else{
+            callback(null, {id: id, nombre: nombre})
+        }
+        });
+    } catch (error) {
+        callback(error, null);
+    }
+   }
 
-   export default { readAllCategories, createCategory, readById}
+   const deleteCategory= function(id, callback){
+    try {
+        const query = 'DELETE FROM categoria where id = ?';
+        const values = [id];
+        db.run(query,values , function(err){
+            if (err) {
+            callback(err.message, null);
+            }else{
+            callback(null, {id: id})
+        }});
+    } catch (error) {
+        callback(error, null);
+    }
+   }
+
+
+   export default { readAllCategories, createCategory, readById, update, deleteCategory}
     
   

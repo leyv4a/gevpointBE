@@ -52,5 +52,21 @@ const readByCode = function (codigo, callback) {
         }
    }
 
+   const deleteItem = (id, callback) => {
+        try {
+            const query = 'DELETE FROM productos WHERE id = ?';
+            const values = [id];
+            db.run(query,values, function(err){
+                if (err) {
+                    callback(err.message, null);
+                    }else{
+                    callback(null, {id: id})
+                }
+            });
+        } catch (error) {
+            callback(error.message, null);
+        }
+   }
 
-export default {readAll, create, readByCode, update};
+
+export default {readAll, create, readByCode, update, deleteItem};

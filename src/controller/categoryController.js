@@ -37,4 +37,33 @@ const readById = (req, res) => {
     }
 }
 
-export {createCategory, readAllCategories, readById};
+const updateCategory = (req, res )=> {
+    try {
+        var {nombre, id} = req.body;
+        nombre = formatText(nombre);
+        category.update(nombre, id, (err, item) => {
+          err ? res.status(500).send(err.message || 'Error updating') :
+          res.status(200).send(`Category updated successfully. :  ${item.id}`);
+        });
+    } catch (error) {
+        res.status(500).send( error.message ||'Error updating category');
+    }
+} 
+
+const deleteCategory = (req, res) => {
+    try {
+       var id = req.params.id;
+       if (id == 0) {
+        res.status(400).send('No se puede eliminar la categoria por defecto');
+        return;
+       }
+        category.deleteCategory(id, (err, deletedItem)=>{
+            err? res.status(500).send(err.message || 'Error deleting') :
+            res.status(200).send(`Category deleted successfully. :  ${deletedItem.id}`);
+        })
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+export {createCategory, readAllCategories, readById, updateCategory, deleteCategory};

@@ -21,7 +21,7 @@ const createProductosTable = () => {
 }
 
 const createCategoriaTable = () => {
-    db.run('CREATE TABLE IF NOT EXISTS categoria (id INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT UNIQUE)', (err) =>{
+    db.run('CREATE TABLE IF NOT EXISTS categoria (id INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT UNIQUE NOT NULL)', (err) =>{
       err
      ?
        console.log(err.message)
