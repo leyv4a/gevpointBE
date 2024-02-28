@@ -26,7 +26,7 @@ const readAll = (callback)=>{
 //READ ITEM BY CODIGO
 const readByCode = function (codigo, callback) {
     try {
-        const query = 'SELECT id, unidad FROM productos WHERE codigo = ?';
+        const query = 'SELECT id, nombre ,unidad FROM productos WHERE codigo = ?';
         db.all(query, [codigo], (err, rows) => {
             if (err) {
                 callback(err, null);

@@ -63,6 +63,7 @@ const updateItem = (req, res) => {
 const readByCode = (req, res) => {
     try {
         var codigo= req.params.codigo;
+        codigo = formatCode(codigo);
         stock.readByCode(codigo, (err, items)=>{
             if (err) {
                 res.status(500).send(err.message || 'Error reading item');

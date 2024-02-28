@@ -1,1 +1,2 @@
 agregar validaciones en el controller de sales, transactions y profit.
+agregar campo descripcion en transacciones
