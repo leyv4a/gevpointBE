@@ -31,7 +31,7 @@ const createCategoriaTable = () => {
 }
 
 const createTransaccionesTable = () => {
-  db.run('CREATE TABLE IF NOT EXISTS transacciones (id INTEGER PRIMARY KEY AUTOINCREMENT, producto_id INTEGER, tipo TEXT, cantidad REAL, fecha TEXT, FOREIGN KEY (producto_id) REFERENCES productos(id))', (err) =>{
+  db.run('CREATE TABLE IF NOT EXISTS transacciones (id INTEGER PRIMARY KEY AUTOINCREMENT, producto_id INTEGER, tipo TEXT,motivo TEXT ,cantidad REAL, fecha TEXT, FOREIGN KEY (producto_id) REFERENCES productos(id))', (err) =>{
     err
    ?
      console.log(err.message)
@@ -41,7 +41,7 @@ const createTransaccionesTable = () => {
 }
 
   const createGananciasTable = () => {
-    db.run('CREATE TABLE IF NOT EXISTS ganancias (id INTEGER PRIMARY KEY AUTOINCREMENT,tipo TEXT, monto REAL, fecha TEXT)', (err) =>{
+    db.run('CREATE TABLE IF NOT EXISTS ganancias (id INTEGER PRIMARY KEY AUTOINCREMENT,tipo TEXT, descripcion TEXT,monto REAL, fecha TEXT)', (err) =>{
       err
      ?
        console.log(err.message)

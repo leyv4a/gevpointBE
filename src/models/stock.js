@@ -17,6 +17,37 @@ const create = function(nombre, codigo, unidad ,impuesto, precio, cantidadMinima
     
 }
 
+const createEntrada = function(id, cantidad, callback){
+    try {
+        const query = 'UPDATE productos SET cantidadActual = cantidadActual + ? WHERE id =?';
+        const values = [ cantidad,id];
+        db.run(query, values, function(err){
+            if (err) {
+                callback(err, null);
+                return;
+            }
+            callback(null, { id: this.lastID });
+        });
+    }catch(err){
+        callback({ message: err.message }, null);
+    }
+}
+const createSalida = function(id, cantidad, callback){
+    try {
+        const query = 'UPDATE productos SET cantidadActual = cantidadActual - ? WHERE id =?';
+        const values = [ cantidad,id];
+        db.run(query, values, function(err){
+            if (err) {
+                callback(err, null);
+                return;
+            }
+            callback(null, { id: this.lastID });
+        });
+    }catch(err){
+        callback({ message: err.message }, null);
+    }
+}
+
 // READ ITEM
 const readAll = (callback)=>{
     const query = 'SELECT p.id, p.nombre, p.codigo, p.unidad ,p.impuesto,p.precio ,p.cantidadActual, p.cantidadMinima, c.nombre AS Categoria FROM productos p JOIN categoria c ON p.categoria_id = c.id';
@@ -69,4 +100,4 @@ const readByCode = function (codigo, callback) {
    }
 
 
-export default {readAll, create, readByCode, update, deleteItem};
+export default {readAll, create, readByCode, update, deleteItem, createEntrada, createSalida};

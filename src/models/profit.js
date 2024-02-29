@@ -1,10 +1,10 @@
 import {db} from './dbConfig.js';
 
 //CREATE PROFIT
-const createProfit = function(tipo, monto, fecha, callback){
+const createProfit = function(tipo, descripcion, monto, fecha, callback){
     try {
-        const query = 'INSERT INTO ganancias(tipo, monto, fecha) VALUES (?, ?, ?)';
-        const values= [tipo, monto, fecha];
+        const query = 'INSERT INTO ganancias(tipo, descripcion,monto, fecha) VALUES (?, ?, ?, ?)';
+        const values= [tipo,descripcion ,monto, fecha];
         db.run(query, values, function(error){
         if (error) throw error;
         callback(null, {id: this.lastID});
@@ -16,9 +16,21 @@ const createProfit = function(tipo, monto, fecha, callback){
 
 //READ PROFIT
 const readAllProfit = (callback) =>{
-    const query = 'SELECT p.tipo, p.monto, p.fecha FROM ganancias p';
+    const query = 'SELECT p.id, p.tipo,p.descripcion, p.monto, p.fecha FROM ganancias p';
     db.all(query, [], callback);
 
 }
 
-export default {createProfit, readAllProfit};
+//READ INGRESOS
+const readAllIngresos = (callback) =>{
+    const query = 'SELECT p.id, p.tipo, p.monto,p.descripcion, p.fecha FROM ganancias p WHERE p.tipo = "Ingreso"';
+    db.all(query, [], callback);
+
+}
+const readAllEgresos = (callback) =>{
+    const query = 'SELECT p.id, p.tipo, p.monto,p.descripcion, p.fecha FROM ganancias p WHERE p.tipo = "Egreso"';
+    db.all(query, [], callback);
+
+}
+
+export default {createProfit, readAllProfit, readAllIngresos,readAllEgresos};

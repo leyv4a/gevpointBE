@@ -3,9 +3,9 @@ import { formatPrice } from '../utils/format.js';
 
 const createTransaction = (req, res) => {
     try {
-        var { producto_id, tipo, cantidad, fecha } = req.body;
+        var { producto_id, tipo,motivo ,cantidad, fecha } = req.body;
         cantidad = formatPrice(cantidad);
-        transactions.createTransaction(producto_id, tipo, cantidad, fecha, (err, item) => {
+        transactions.createTransaction(producto_id, tipo, motivo ,cantidad, fecha, (err, item) => {
             if (err) {
                 res.status(500).send({ error: err.message }); // Envía el objeto de error al cliente
             } else {
@@ -33,4 +33,36 @@ const readAllTransactions = (req, res) => {
         res.status(500).send({ error: error.message || 'Error reading transactions...' });
     }
 };
-export {createTransaction, readAllTransactions};
+const readAllEntradas = (req, res) => {
+    try {
+        transactions.readEntradas((err, items) => {
+            if (err) {
+                console.error('Error reading transactions:', err.message);
+                res.status(500).send({ error: err.message });
+                return;
+            } else {
+                res.status(200).json(items);
+            }
+        });
+    } catch (error) {
+        console.error('Unexpected error:', error.message);
+        res.status(500).send({ error: error.message || 'Error reading transactions...' });
+    }
+};
+const readAllSalidas = (req, res) => {
+    try {
+        transactions.readSalidas((err, items) => {
+            if (err) {
+                console.error('Error reading transactions:', err.message);
+                res.status(500).send({ error: err.message });
+                return;
+            } else {
+                res.status(200).json(items);
+            }
+        });
+    } catch (error) {
+        console.error('Unexpected error:', error.message);
+        res.status(500).send({ error: error.message || 'Error reading transactions...' });
+    }
+};
+export {createTransaction, readAllTransactions, readAllEntradas, readAllSalidas};
