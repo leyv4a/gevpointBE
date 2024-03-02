@@ -66,4 +66,5 @@ const deleteCategory = (req, res) => {
     }
 }
 
+
 export {createCategory, readAllCategories, readById, updateCategory, deleteCategory};

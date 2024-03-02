@@ -33,4 +33,14 @@ const readAllEgresos = (callback) =>{
 
 }
 
-export default {createProfit, readAllProfit, readAllIngresos,readAllEgresos};
+const gastosTotalesMes =  (callback) => {
+    const query = "SELECT substr(fecha, instr(fecha, '/')+1, 7) AS Mes, SUM(monto) AS GastosTotales FROM ganancias WHERE tipo = 'Egreso' GROUP BY substr(fecha, instr(fecha, '/')+1, 7)"
+    db.all(query, [], callback);
+}
+const gastosMes =  (callback) => {
+    const query = "SELECT Mes, GananciasBrutas, GastosTotales, (GananciasBrutas - GastosTotales) AS GananciasNetas FROM (SELECT substr(fecha, instr(fecha, '/')+1, 7) AS Mes, SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS GananciasBrutas,SUM(CASE WHEN tipo = 'Egreso' THEN monto ELSE 0 END) AS GastosTotales FROM ganancias GROUP BY Mes)"
+    db.all(query, [], callback);
+}
+
+
+export default {createProfit, readAllProfit, readAllIngresos,readAllEgresos, gastosMes};

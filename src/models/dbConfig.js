@@ -60,5 +60,7 @@ const createTransaccionesTable = () => {
       })
     }
 
+ 
+
 
 export {inicializeDb, db};

@@ -40,4 +40,6 @@ const readAllEgresos = (req, res) => {
         res.status(500).send(error.message || 'Error reading profit...');
     }
 }
+
+
 export {createProfit, readAllProfit, readAllIngresos, readAllEgresos};

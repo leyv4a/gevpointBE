@@ -20,4 +20,11 @@ const readAllSales= (callback)=>{
     db.all(query, [], callback);
 }
 
-export default {readAllSales, createSale};
+const gananciasBrutas = (callback)=>{
+    // const query =' SELECT SUM(monto) AS brutas FROM ventas';
+    const query = "SELECT strftime('%Y-%m', fecha) AS Mes, SUM(monto) AS brutas FROM ventas GROUP BY Mes"
+    db.all(query, [], callback);
+
+}
+
+export default {readAllSales, createSale, gananciasBrutas};

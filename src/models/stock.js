@@ -32,7 +32,7 @@ const createEntrada = function(id, cantidad, callback){
         callback({ message: err.message }, null);
     }
 }
-const createSalida = function(id, cantidad, callback){
+const createSalida = function(cantidad,id, callback){
     try {
         const query = 'UPDATE productos SET cantidadActual = cantidadActual - ? WHERE id =?';
         const values = [ cantidad,id];
@@ -57,7 +57,7 @@ const readAll = (callback)=>{
 //READ ITEM BY CODIGO
 const readByCode = function (codigo, callback) {
     try {
-        const query = 'SELECT id, nombre ,unidad FROM productos WHERE codigo = ?';
+        const query = 'SELECT id, nombre ,unidad, precio FROM productos WHERE codigo = ?';
         db.all(query, [codigo], (err, rows) => {
             if (err) {
                 callback(err, null);
@@ -98,6 +98,8 @@ const readByCode = function (codigo, callback) {
             callback(error.message, null);
         }
    }
+
+  
 
 
 export default {readAll, create, readByCode, update, deleteItem, createEntrada, createSalida};

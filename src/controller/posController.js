@@ -61,4 +61,44 @@ const RegistrarSalida = function(req, res){
         res.status(500).send({ error: error.message });
     }
 }
-export {RegistrarEntrada, RegistrarSalida};
+
+
+const gananciasBrutas = (req, res) => {
+    try {
+        sales.gananciasBrutas((err, items) => {
+            res.status(200).json(items);
+        } )
+    } catch (error) {
+        res.status(500).send(error.message || 'Error reading sales...')
+    }
+}
+
+const gastosTotalesMes = (req, res) =>{
+    try {
+        profit.gastosMes((err, item) => {
+           if (err) {
+            res.status(500).send(err.message || 'Error');
+            return;
+           }
+           res.status(200).json(item);
+        });
+    } catch (error) {
+        res.status(500).send(error.message || 'Error reading sales...')
+    }
+}
+
+const getMasVendido= (req, res)=>{
+    try {
+        transactions.getMasVendido((err, item)=>{
+            if (err) {
+                res.status(500).send(err.message || 'Error');
+                return;
+               }
+               res.status(200).json(item);
+        });
+    } catch (error) {
+        res.status(500).send(err.message || 'Error');
+    }
+}
+
+export {RegistrarEntrada, RegistrarSalida, gananciasBrutas, gastosTotalesMes, getMasVendido};

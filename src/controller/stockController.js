@@ -93,5 +93,26 @@ const deleteItem = (req, res) => {
     }
 }
 
+const createSalida = (req, res) => {
+    try {
+        var {cantidad, id } = req.body;
+        if (id == 0 || !cantidad) {
+            res.status(400).send("Invalidad data") ;
+            return;
+        }else{
+            stock.createSalida(cantidad,id, (err, result)=>{
+                if (err) {
+                    res.status(500).send(err); // Si hay un error, envía el mensaje de error al cliente
+                } else {
+                    res.status(200).send(`Item added successfully. Id: ${result.id}`);
+                }
+            });
+        }
 
-export {readAllItems, createItem, readByCode, updateItem, deleteItem};
+    } catch (error) {
+        res.status(500).send(err); // Si hay un error, envía el mensaje de error al cliente
+    }
+}
+
+
+export {readAllItems, createItem, readByCode, updateItem, deleteItem, createSalida};

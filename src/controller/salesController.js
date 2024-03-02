@@ -21,4 +21,6 @@ const readAllSales = (req, res) => {
     }
 }
 
+
+
 export { createSale, readAllSales};
