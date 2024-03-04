@@ -1,8 +1,13 @@
 import profit from '../models/profit.js';
+import { formatPrice,formatText } from '../utils/format.js';
 
 const createProfit = (req, res) => {
 try {
     var {tipo,descripcion ,monto, fecha} = req.body;
+    monto = formatPrice(monto);
+    tipo = formatText(tipo);
+    descripcion = formatText(descripcion);
+
     profit.createProfit(tipo,descripcion, monto, fecha, (err, item) => {
         res.status(200).send(`Profit added successfully. Id: ${item.id}`);
     });

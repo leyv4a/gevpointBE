@@ -7,8 +7,11 @@ const createCategory = function (nombre ,callback) {
         const values = [nombre];
         
         db.run(query, values, function(err){
-           if (err) throw err;
+           if (err) {
            callback(null, {id: this.lastID})
+        return;
+        }
+            callback(null, {id: this.lastID});
         });
     } catch (error) {
         callback(error.message, null);

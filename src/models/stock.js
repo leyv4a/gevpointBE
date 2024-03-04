@@ -8,8 +8,11 @@ const create = function(nombre, codigo, unidad ,impuesto, precio, cantidadMinima
     const values = [nombre, codigo,unidad, impuesto, precio, cantidadMinima, categoria];
 
     db.run(query, values, function(err){
-       if (err) throw err;
+       if (err) {
        callback(null, {id: this.lastID})
+       return;
+    }
+    callback(null, {id: this.lastID})
     });
     } catch (error) {
         callback(error.message, null);
@@ -75,8 +78,13 @@ const readByCode = function (codigo, callback) {
             const query = 'UPDATE productos SET nombre = ?, codigo=?, unidad=?, impuesto=? ,precio = ?, cantidadMinima = ?, categoria_id = ? WHERE id = ?';
             const values = [nombre, codigo,unidad, impuesto, precio, cantidadMinima, categoria,id];
             db.run(query,values, function(err){
-                if (err) throw err;
-                callback(null, {id: this.lastID})
+                if(err){
+                    console.log(err.message);
+                    callback(err.message, null);
+                    return;
+                }else{
+                    callback(null, {id: id})
+                }
             });
         } catch (error) {
                 callback(error.message, null);

@@ -6,8 +6,11 @@ const createSale = function(fecha, monto, callback){
         const query = 'INSERT INTO ventas(fecha, monto) VALUES (?, ?)';
         const values= [fecha, monto];
         db.run(query, values, function(error){
-        if (error) throw error;
-        callback(null, {id: this.lastID});
+            if (error) {
+                callback(error.message, null);
+                return;
+            }
+            callback(null, {id: this.lastID});
     });
     } catch (error) {
         callback(error.message, null)

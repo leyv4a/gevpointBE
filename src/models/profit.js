@@ -6,8 +6,11 @@ const createProfit = function(tipo, descripcion, monto, fecha, callback){
         const query = 'INSERT INTO ganancias(tipo, descripcion,monto, fecha) VALUES (?, ?, ?, ?)';
         const values= [tipo,descripcion ,monto, fecha];
         db.run(query, values, function(error){
-        if (error) throw error;
-        callback(null, {id: this.lastID});
+            if(error){
+                callback(error.message, null);
+                return;
+            }
+            callback(null, {id: this.lastID});
     });
     } catch (error) {
         callback(error.message, null);
