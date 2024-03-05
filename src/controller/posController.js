@@ -101,4 +101,18 @@ const getMasVendido= (req, res)=>{
     }
 }
 
-export {RegistrarEntrada, RegistrarSalida, gananciasBrutas, gastosTotalesMes, getMasVendido};
+const getTopCinco= (req, res)=>{
+    try {
+        transactions.getTopCinco((err, item)=>{
+            if (err) {
+                res.status(500).send(err.message || 'Error');
+                return;
+               }
+               res.status(200).json(item);
+        });
+    } catch (error) {
+        res.status(500).send(err.message || 'Error');
+    }
+}
+
+export {RegistrarEntrada, RegistrarSalida, gananciasBrutas, gastosTotalesMes, getMasVendido, getTopCinco};

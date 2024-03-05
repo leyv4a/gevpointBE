@@ -4,7 +4,7 @@ import { createCategory, deleteCategory, readAllCategories, readById, updateCate
 import { createTransaction, readAllEntradas, readAllSalidas, readAllTransactions } from '../controller/transactionsController.js';
 import { createSale, getVentasDiarias, readAllSales } from '../controller/salesController.js';
 import { createProfit, readAllIngresos, readAllEgresos } from '../controller/profitController.js'
-import { RegistrarEntrada, gananciasBrutas, gastosTotalesMes, getMasVendido } from '../controller/posController.js';
+import { RegistrarEntrada, gananciasBrutas, gastosTotalesMes, getMasVendido, getTopCinco } from '../controller/posController.js';
 
 const router = Router();
 
@@ -13,6 +13,7 @@ router.post('/pos', RegistrarEntrada);
 router.get('/brutas', gananciasBrutas);
 router.get('/totales', gastosTotalesMes);
 router.get('/top', getMasVendido);
+router.get('/topcinco', getTopCinco);
 
 
 //Productos router

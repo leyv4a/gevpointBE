@@ -78,5 +78,20 @@ const getMasVendido= (callback)=>{
     }
    } 
 
+   const getTopCinco= (callback)=>{
+    try {
+        const query = "SELECT substr(fecha, instr(fecha, '/')+1, 7) AS Mes, P.nombre AS Producto, SUM(T.cantidad) AS TotalVendidoMes FROM transacciones T JOIN productos P ON T.producto_id = P.id WHERE T.motivo = 'Venta' GROUP BY Mes, P.id ORDER BY TotalVendidoMes DESC LIMIT 5;"
+        db.all(query, [], function (err, rows) {
+            if (err) {
+                callback({ message: err.message }, null);
+            } else {
+                callback(null, rows);
+            }});
 
-   export default { readAllTransactions, createTransaction,readEntradas, readSalidas, getMasVendido};
+    } catch (error) {
+        callback({ message: error.message }, null);
+    }
+   } 
+
+
+   export default { readAllTransactions, createTransaction,readEntradas, readSalidas, getMasVendido, getTopCinco};
