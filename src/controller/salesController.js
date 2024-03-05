@@ -21,6 +21,15 @@ const readAllSales = (req, res) => {
     }
 }
 
+const getVentasDiarias = (req, res) => {
+    try {
+        sales.getVentasDiarias((err, items) => {
+            res.status(200).json(items);
+        } )
+    } catch (error) {
+        res.status(500).send(error.message || 'Error reading sales...')
+    }
+}
 
 
-export { createSale, readAllSales};
+export { createSale, readAllSales, getVentasDiarias};

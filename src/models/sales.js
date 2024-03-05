@@ -24,10 +24,15 @@ const readAllSales= (callback)=>{
 }
 
 const gananciasBrutas = (callback)=>{
-    // const query =' SELECT SUM(monto) AS brutas FROM ventas';
     const query = "SELECT strftime('%Y-%m', fecha) AS Mes, SUM(monto) AS brutas FROM ventas GROUP BY Mes"
     db.all(query, [], callback);
 
 }
 
-export default {readAllSales, createSale, gananciasBrutas};
+const getVentasDiarias = (callback) => {
+    const query = "SELECT strftime('%d', fecha) AS dia, COUNT(*) AS cantidad_ventas FROM ventas WHERE strftime('%Y-%m', fecha) = strftime('%Y-%m', 'now') GROUP BY dia;"
+    
+    db.all(query, [], callback);
+  };
+
+export default {readAllSales, createSale, gananciasBrutas, getVentasDiarias};

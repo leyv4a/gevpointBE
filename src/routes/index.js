@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { readAllItems, createItem, readByCode, updateItem, deleteItem, createSalida } from '../controller/stockController.js';
 import { createCategory, deleteCategory, readAllCategories, readById, updateCategory } from '../controller/categoryController.js';
 import { createTransaction, readAllEntradas, readAllSalidas, readAllTransactions } from '../controller/transactionsController.js';
-import { createSale, readAllSales } from '../controller/salesController.js';
+import { createSale, getVentasDiarias, readAllSales } from '../controller/salesController.js';
 import { createProfit, readAllIngresos, readAllEgresos } from '../controller/profitController.js'
 import { RegistrarEntrada, gananciasBrutas, gastosTotalesMes, getMasVendido } from '../controller/posController.js';
 
@@ -39,6 +39,8 @@ router.get('/transaction/salidas', readAllSalidas);
 //Sales router
 router.post('/sale', createSale);
 router.get('/sale', readAllSales);
+router.get('/sale/daily', getVentasDiarias);
+
 //Profit router
 router.post('/profit', createProfit);
 router.get('/profit', readAllIngresos);
