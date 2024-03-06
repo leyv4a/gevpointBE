@@ -24,7 +24,11 @@ const createItem = (req, res) => {
        }else{
         
         stock.create(nombre, codigo,unidad, impuesto, precio, cantidadMinima, categoria, (err, item) => {
-        res.status(200).send(`Item added successfully. Id: ${item.id}`)
+            if(err){
+                res.status(400).send(err.message || 'Error creating item...');
+                return;
+            }
+             res.status(200).send(`Item added successfully. Id: ${item.id}`)
  
     });
 }

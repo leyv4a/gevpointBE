@@ -39,7 +39,8 @@ const readAllEgresos = (callback) =>{
 
 
 const gastosMes =  (callback) => {
-    const query = "SELECT Mes, GananciasBrutas, GastosTotales, (GananciasBrutas - GastosTotales) AS GananciasNetas FROM ( SELECT strftime('%Y-%m', fecha) AS Mes, SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS GananciasBrutas, SUM(CASE WHEN tipo = 'Egreso' THEN monto ELSE 0 END) AS GastosTotales FROM ganancias WHERE strftime('%Y-%m', fecha) = strftime('%Y-%m', 'now') GROUP BY Mes);"
+    // const query = "SELECT Mes, GananciasBrutas, GastosTotales, (GananciasBrutas - GastosTotales) AS GananciasNetas FROM ( SELECT strftime('%Y-%m', fecha) AS Mes, SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS GananciasBrutas, SUM(CASE WHEN tipo = 'Egreso' THEN monto ELSE 0 END) AS GastosTotales FROM ganancias WHERE strftime('%Y-%m', fecha) = strftime('%Y-%m', 'now') GROUP BY Mes);"
+    const query = "SELECT Mes, GastosTotales, GananciasBrutas, (GananciasBrutas - GastosTotales) AS GananciasNetas, (GananciasNetas / GananciasBrutas * 100) AS Margen FROM (SELECT strftime('%Y-%m', fecha) AS Mes, SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) AS GananciasBrutas, SUM(CASE WHEN tipo = 'Egreso' THEN monto ELSE 0 END) AS GastosTotales, SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE -monto END) AS GananciasNetas FROM ganancias WHERE strftime('%Y-%m', fecha) = strftime('%Y-%m', 'now')GROUP BY Mes);"
     db.all(query, [], callback);
 }
 

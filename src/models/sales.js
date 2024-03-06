@@ -30,9 +30,16 @@ const gananciasBrutas = (callback)=>{
 }
 
 const getVentasDiarias = (callback) => {
-    const query = "SELECT strftime('%d', fecha) AS dia, COUNT(*) AS cantidad_ventas FROM ventas WHERE strftime('%Y-%m', fecha) = strftime('%Y-%m', 'now') GROUP BY dia;"
+    const query = "SELECT strftime('%d', fecha) AS dia, COUNT(*) AS ventas FROM ventas WHERE strftime('%Y-%m', fecha) = strftime('%Y-%m', 'now') GROUP BY dia;"
     
     db.all(query, [], callback);
   };
 
-export default {readAllSales, createSale, gananciasBrutas, getVentasDiarias};
+  const getVentaSemanaMes = (callback) => {
+    //Esta consulta devuelve el dineor generado ese dia
+    // const query = "SELECT strftime('%w', fecha) as dia_semana, strftime('%Y-%m', fecha) as mes_anio, SUM(monto) as total_ventas FROM ventas WHERE strftime('%Y-%m', fecha) = strftime('%Y-%m', 'now') GROUP BY dia_semana ORDER BY dia_semana;" 
+    const query = "SELECT strftime('%w', fecha) as dia_semana, COUNT(*) as total_ventas FROM ventas WHERE strftime('%Y-%m', fecha) = strftime('%Y-%m', 'now') GROUP BY dia_semana ORDER BY dia_semana;"
+    db.all(query, [], callback);
+  }
+
+export default {readAllSales, createSale, gananciasBrutas, getVentasDiarias, getVentaSemanaMes};

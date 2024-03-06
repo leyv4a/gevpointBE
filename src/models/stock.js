@@ -9,7 +9,7 @@ const create = function(nombre, codigo, unidad ,impuesto, precio, cantidadMinima
 
     db.run(query, values, function(err){
        if (err) {
-       callback(null, {id: this.lastID})
+       callback(err.message, null)
        return;
     }
     callback(null, {id: this.lastID})
